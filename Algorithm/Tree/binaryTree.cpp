@@ -20,6 +20,7 @@ using namespace std;
 #define SORT(v,n) sort(v, v+n)
 #define ALL(x) (x).begin(),(x).end()
 #define debug(x) cerr << #x << ": " << x << '\n'
+#define elif else if
 #define itn int
 using ll = long long;
 const int INF = 100100100;
@@ -51,15 +52,15 @@ void print(int u) {
 	cout << "degree = " << Degree[u] << ", ";
 	cout << "depth = " << Depth[u] << ", ";
 	cout << "height = " << Height[u] << ", ";
-	if (T[u].parent == NIL) cout << "root, ";
-	else if (T[u].left == NIL)cout << "leaf, ";
-	else cout << "internal node, ";
 
+	if (T[u].parent == NIL) cout << "root";
+	elif(T[u].left == NIL && T[u].right == NIL) cout << "leaf";
+	else cout << "internal node";
 	cout << endl;
 	/*cout << '[';
 	for (i = 0, c = T[u].left; c != NIL; i++, c = T[c].right) {
-		if (i) cout << ", ";
-		cout << c;
+	if (i) cout << ", ";
+	cout << c;
 	}
 	cout << ']' << endl;*/
 }
@@ -71,9 +72,20 @@ void rec(int u, int p) {
 }
 
 void DepRec(int id, int depth) {
+	if (id == NIL)
+		return;
+	Depth[id] = depth;
+	DepRec(T[id].left, depth + 1);
+	DepRec(T[id].right, depth + 1);
 }
 
-int HeightRec(int id, int height) {
+int HeightRec(int id) {
+	int h1 = 0, h2 = 0;
+	if (T[id].left != NIL)
+		h1 = HeightRec(T[id].left) + 1;
+	if (T[id].right != NIL)
+		h2 = HeightRec(T[id].right) + 1;
+	return Height[id] = max(h1, h2);
 }
 
 signed main() {
@@ -87,31 +99,19 @@ signed main() {
 		T[id].right = right;
 		if (left != NIL) {
 			T[left].parent = id;
+			if (right != NIL) Sibling[left] = right;
+			Degree[id]++;
+		}
+		if (right != NIL) {
 			T[right].parent = id;
-			Sibling[left] = right;
-			Sibling[right] = left;
-			Degree[id] = 2;
+			if (left != NIL) Sibling[right] = left;
+			Degree[id]++;
 		}
 	}
 	int root;
 	rep(i, n) if (T[i].parent == NIL) root = i;
-	//DepRec(0,root);
-	//HeightRec(0, root);
-	rep(i, n) {
-		int d = 0;
-		int checkId = i;
-		while (true) {
-			if (T[checkId].parent != NIL) {
-				checkId = T[checkId].parent;
-				d++;
-			}
-			else {
-				break;
-			}
-		}
-		Depth[i] = d;
-	}
-	HeightRec(0, root);
+	DepRec(root, 0);
+	HeightRec(root);
 	rep(i, n) print(i);
 	return 0;
 }
