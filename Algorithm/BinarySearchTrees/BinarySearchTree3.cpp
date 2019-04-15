@@ -14,6 +14,7 @@
 #include <functional>
 
 using namespace std;
+using ll = long long int;
 #define rep(i,n) for(int i = 0; i < n; i++)
 #define FOR(i, a, b)  for(int i = (a); i < (b) ; i++)
 #define pb push_back
@@ -21,8 +22,7 @@ using namespace std;
 #define ALL(x) (x).begin(),(x).end()
 #define debug(x) cerr << #x << ": " << x << '\n'
 #define elif else if
-#define itn int
-using ll = long long int;
+#define itn ll
 #define int ll
 const int INF = 100100100;
 const int MOD = (int)1e9 + 7;
@@ -89,8 +89,9 @@ void treeDelete(Node *z) {
 	}
 	if (y != z)
 		z->key = y->key;
-	free(z);
+	free(y);
 }
+
 void preParse(Node *u) {
 	if (u == NIL)
 		return;
@@ -118,7 +119,9 @@ void postParse(Node* u) {
 void insert(int key) {
 	Node *y = NIL;
 	Node *x = root;
-	Node* z = new Node;
+	Node *z;
+	z = (Node*)malloc(sizeof(Node));
+	//Node* z = new Node;
 	z->key = key;
 	z->left = NIL;
 	z->right = NIL;
@@ -172,7 +175,9 @@ signed main() {
 		}
 		if (com == "delete") {
 			cin >> x;
-			treeDelete(find(root, x));
+			if (find(root, x) != NIL) {
+				treeDelete(find(root, x));
+			}
 		}
 	}
 	return 0;
