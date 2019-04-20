@@ -45,25 +45,20 @@ bool slove(int i, int m) {
 
 	if (m == 0) {
 		dp[i][m].res = true;
-		dp[i][m].isSloved = true;
 	}
 	else if (i >= n) {
 		dp[i][m].res = false;
-		dp[i][m].isSloved = true;
 	}
 	else if (slove(i + 1, m)) {
 		dp[i][m].res = true;
-		dp[i][m].isSloved = true;
 	}
 	else if (slove(i + 1, m - A[i])) {
 		dp[i][m].res = true;
-		dp[i][m].isSloved = true;
 	}
 	else {
 		dp[i][m].res = false;
-		dp[i][m].isSloved = true;
-		return false;
 	}
+	dp[i][m].isSloved = true;
 	return dp[i][m].res;
 }
 
