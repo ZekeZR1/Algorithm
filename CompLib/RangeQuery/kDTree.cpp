@@ -82,8 +82,7 @@ int makeKDTree(int l, int r, int depth) {
 void find(int v, int sx, int tx, int sy, int ty, int depth, vector<Point> & ans) {
 	int x = P[T[v].location].x;
 	int y = P[T[v].location].y;
-
-	//if (sx <= x and x <= tx and sy <= y and y <= ty) {
+	int id = P[T[v].location].id;
 	if (sx <= x && x <= tx && sy <= y && y <= ty) {
 		ans.pb(P[T[v].location]);
 	}
@@ -91,21 +90,21 @@ void find(int v, int sx, int tx, int sy, int ty, int depth, vector<Point> & ans)
 	if (depth % 2 == 0) {
 		if (T[v].l != NIL) {
 			if (sx <= x)
-				find(T[v].l, sx, ty, sy, ty, depth + 1, ans);
+				find(T[v].l, sx, tx, sy, ty, depth + 1, ans);
 		}
 		if (T[v].r != NIL) {
 			if (x <= tx)
-				find(T[v].r, sx, ty, sy, ty, depth + 1, ans);
+				find(T[v].r, sx, tx, sy, ty, depth + 1, ans);
 		}
 	}
 	else {
 		if (T[v].l != NIL) {
 			if (sy <= y)
-				find(T[v].l, sx, ty, sy, ty, depth + 1, ans);
+				find(T[v].l, sx, tx, sy, ty, depth + 1, ans);
 		}
 		if (T[v].r != NIL) {
 			if (y <= ty)
-				find(T[v].r, sx, ty, sy, ty, depth + 1, ans);
+				find(T[v].r, sx, tx, sy, ty, depth + 1, ans);
 		}
 	}
 }
