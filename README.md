@@ -24,7 +24,7 @@
 
 - 最小全域木
 
-### DP
+### 動的計画法(Dynamic Programming)
 - 最長共通部分列(LCS)
 
 - 連鎖行列積
