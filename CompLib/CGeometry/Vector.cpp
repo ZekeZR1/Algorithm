@@ -72,3 +72,15 @@ bool isParallel(Point a1, Point a2, Point b1, Point b2) {
 bool isParallel(Segment s1, Segment s2) {
 	return equals(cross(s1.p2 - s1.p1, s2.p2 - s2.p1), 0.0);
 }
+
+//線分sに対する点pの射影
+Point project(Segment s, Point p) {
+	Vector base = s.p2 - s.p1;
+	double r = dot(p - s.p1, base) / base.norm();
+	return s.p1 + base * r;
+}
+
+//線分sに対する反射
+Point refrect(Segment s, Point p) {
+	return p + (project(s, p) - p) * 2.0;
+}

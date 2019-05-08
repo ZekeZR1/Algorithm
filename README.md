@@ -66,3 +66,7 @@
 ### 計算幾何学
 #### Vector
 - 平行・垂直
+
+- Projection
+
+- Refrection
