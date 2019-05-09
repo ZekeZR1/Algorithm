@@ -24,6 +24,7 @@ public:
 };
 
 typedef Point Vector;
+typedef Segment Line;
 typedef vector<Point> Polygon;
 
 double dot(Vector a, Vector b) {
@@ -80,7 +81,39 @@ Point project(Segment s, Point p) {
 	return s.p1 + base * r;
 }
 
-//線分sに対する反射
+//線分ｓに対する点ｐの反射
 Point refrect(Segment s, Point p) {
 	return p + (project(s, p) - p) * 2.0;
+}
+
+//2点間の距離
+double getDistance(Point a, Point b) {
+	Point res = a - b;
+	return res.abs();
+}
+//点と直線の距離
+double getDistanceLP(Line l, Point p) {
+	return abs(cross(l.p2 - l.p1, p - l.p1) / abs(l.p2 - l.p1));
+}
+
+//線分ｓと点ｐの距離
+double getDistanceSP(Segment s, Point p) {
+	if (dot(s.p2 - s.p1, p - s.p1) < 0.0) {
+		Point r = p - s.p1;
+		return r.abs();
+	}
+}
+
+//線分と線分の交差判定
+bool intersect(Segment s1, Segment s2) {
+	//return ( ccw())
+}
+
+//線分と線分の距離
+double getDistance(Segment s1, Segment s2) {
+	if (intersect(s1, s2)) return 0.0;
+	return min(
+		min(getDistanceSP(s1, s2.p1), getDistanceSP(s1, s2.p2)),
+		min(getDistanceSP(s2, s1.p1), getDistanceSP(s2, s1.p2))
+	);
 }
