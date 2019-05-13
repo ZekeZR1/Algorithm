@@ -167,3 +167,14 @@ pair<Point, Point> getCrossPoints(Circle c, Line l) {
 	double base = sqrt(c.r * c.r - Vector(pr - c.c).norm());
 	return make_pair(pr + e * base, pr - e * base);
 }
+
+//円c1と円c2の交点
+double arg(Vector p) { return atan2(p.y, p.x); }
+Vector polar(double a, double r) { return Point(cos(r) * a, sin(r) * a); }
+
+pair<Point, Point> getCrossPoints(Circle c1, Circle c2) {
+	double d = Vector(c1.c - c2.c).abs();
+	double a = acos((c1.r * c1.r + d * d - c2.r * c2.r) / (2 * c1.r * d));
+	double t = arg(c2.c - c1.c);
+	return make_pair(c1.c + polar(c1.r, t + a), c1.c + polar(c1.r, t - a));
+}
