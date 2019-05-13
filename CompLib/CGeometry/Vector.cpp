@@ -153,3 +153,17 @@ Point getCrossPoint(Segment s1, Segment s2) {
 	double t = d1 / (d1 + d2);
 	return s1.p1 + (s1.p2 - s1.p1) * t;
 }
+
+//円ｃと線分ｌの交差判定
+bool intersect(Circle c, Line l) {
+	return getDistanceSP(l, c.c) <= c.r;
+}
+
+//円ｃと線分ｌの交点
+pair<Point, Point> getCrossPoints(Circle c, Line l) {
+	assert(intersect(c, l));
+	Vector pr = project(l, c.c);
+	Vector e = (l.p2 - l.p1) / Vector(l.p2 - l.p1).abs();
+	double base = sqrt(c.r * c.r - Vector(pr - c.c).norm());
+	return make_pair(pr + e * base, pr - e * base);
+}
