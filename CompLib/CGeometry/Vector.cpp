@@ -178,3 +178,19 @@ pair<Point, Point> getCrossPoints(Circle c1, Circle c2) {
 	double t = arg(c2.c - c1.c);
 	return make_pair(c1.c + polar(c1.r, t + a), c1.c + polar(c1.r, t - a));
 }
+
+//点の内包判定
+static const int IN = 2;
+static const int ON = 1;
+static const int OUT = 0;
+int contains(Polygon g, Point p) {
+	int n = g.size();
+	bool x = false;
+	rep(i, n) {
+		Point a = g[i] - p, b = g[(i + 1) % n] - p;
+		if (abs(cross(a, b)) < EPS and dot(a, b) < EPS) return ON;
+		if (a.y > b.y)swap(a, b);
+		if (a.y < EPS and EPS < b.y and cross(a, b) > EPS) x = !x;
+	}
+	return (x ? IN : OUT);
+}
