@@ -5,7 +5,7 @@ static const int CLOCKWISE = -1;
 static const int ONLINE_BACK = 2;
 static const int ONLINE_FRONT = -2;
 static const int ON_SEGMENT = 0;
-
+#define XYSORT;
 class Point {
 public:
 	double x, y;
@@ -21,7 +21,12 @@ public:
 	double abs() { return sqrt(norm()); }
 
 	bool operator<(const Point & p) const {
+#ifdef XYSORT
 		return x != p.x ? x < p.x : y < p.y;
+#endif 
+#ifdef YXSORT
+		return y != p.y ? y < p.y : x < p.x;
+#endif 
 	}
 
 	bool operator==(const Point & p) const {
