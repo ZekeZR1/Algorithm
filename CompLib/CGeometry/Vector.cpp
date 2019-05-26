@@ -5,7 +5,8 @@ static const int CLOCKWISE = -1;
 static const int ONLINE_BACK = 2;
 static const int ONLINE_FRONT = -2;
 static const int ON_SEGMENT = 0;
-#define XYSORT;
+#define XYSORT
+
 class Point {
 public:
 	double x, y;
@@ -225,4 +226,66 @@ Polygon andrewScan(Polygon s) {
 
 	for (int i = u.size() - 2; i >= 1; i--) l.push_back(u[i]);
 	return l;
+}
+
+//マンハッタン幾何 平面走査
+static const int BOTTOM = 0;
+static const int LEFT = 1;
+static const int RIGHT = 2;
+static const int TOP = 3;
+//端点
+class EndPoint {
+public:
+	Point p;
+	int seg, st;
+	EndPoint() {}
+	EndPoint(Point p, int seg, int st) : p(p), seg(seg), st(st) {}
+	bool operator<(const EndPoint& ep) const {
+		if (p.y == ep.p.y) {
+			return st < ep.st;
+		}
+		else return p.y < ep.p.y;
+	}
+};
+
+EndPoint EP[2 * 100000];
+
+//線分交差判定
+int manhattanIntersection(vector<Segment> s) {
+	int n = s.size();
+	for (int i = 0, k = 0; i < n; i++) {
+		if (s[i].p1.y == s[i].p2.y) {
+			if (s[i].p1.x > s[i].p2.x) swap(s[i].p1, s[i].p2);
+		}
+		else if (s[i].p1.y > s[i].p2.y) swap(s[i].p1, s[i].p2);
+
+		if (s[i].p1.y == s[i].p2.y) {
+			EP[k++] = EndPoint(s[i].p1, i, LEFT);
+			EP[k++] = EndPoint(s[i].p2, i, RIGHT);
+		}
+		else {
+			EP[k++] = EndPoint(s[i].p1, i, BOTTOM);
+			EP[k++] = EndPoint(s[i].p2, i, TOP);
+		}
+	}
+
+	sort(EP, EP + (2 * n));
+
+	set<int> BT;
+	BT.insert(1000000001);
+	int cnt = 0;
+	for (int i = 0; i < 2 * n; i++) {
+		if (EP[i].st == TOP) {
+			BT.erase(EP[i].p.x);
+		}
+		else if (EP[i].st == BOTTOM) {
+			BT.insert(EP[i].p.x);
+		}
+		else if (EP[i].st == LEFT) {
+			auto b = BT.lower_bound(s[EP[i].seg].p1.x);
+			auto e = BT.upper_bound(s[EP[i].seg].p2.x);
+			cnt += distance(b, e);
+		}
+	}
+	return cnt;
 }

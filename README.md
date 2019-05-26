@@ -89,4 +89,6 @@
 
 - 点の内包判定
 
-- Andrew's Algorithm 
+- Andrew's Algorithm
+
+- 線分交差(マンハッタン幾何 平面走査)
