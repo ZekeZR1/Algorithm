@@ -21,6 +21,19 @@
 
 - MST(kruskal法)
 
+### 動的計画法(Dynamic Programming)
+- 最長共通部分列(LCS)
+
+- 連鎖行列積
+
+- フィボナッチ数列
+
+- 全探索(メモ化再帰)
+
+- コイン問題
+
+- 0-1Knapsack Problem
+
 ### 木
 - 根付き木
 
@@ -33,19 +46,6 @@
 - Union Find Tree
 
 - kD-Tree
-
-### 動的計画法(Dynamic Programming)
-- 最長共通部分列(LCS)
-
-- 連鎖行列積
-
-- フィボナッチ数列
-
-- 全探索(メモ化再帰)
-
-- コイン問題
-
--　0-1Knapsack Problem
 
 ### 探索
 - 線形探索
