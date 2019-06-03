@@ -34,6 +34,8 @@
 
 - 0-1Knapsack Problem
 
+- 最長増加部分列(LIS)
+
 ### 木
 - 根付き木
 
